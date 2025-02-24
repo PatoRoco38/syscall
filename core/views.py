@@ -1,7 +1,10 @@
 from django.shortcuts import render
 
 # Create your views here.
-def index(request):
-    return render(request, 'index.html')
+def login(request):
+    return render(request, 'login.html')
+
+def abrir_chamado(request):
+    return render(request, 'abrir_chamado.html')
 
 
