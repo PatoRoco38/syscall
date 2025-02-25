@@ -43,7 +43,10 @@
 
                                 <p class="small mb-5 pb-lg-2"><a class="text-white-50" href="#!">Esqueci minha senha</a></p>
 
-                                <button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
+                                <form method="post" action="{% url 'index' %}">
+                                    {% csrf_token %}
+                                    <button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
+                                </form>
                             </div>
 
                             <div>

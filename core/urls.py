@@ -1,9 +1,12 @@
 from django.urls import path
 
-from .views import abrir_chamado, login
+from .views import index, abrir_chamado, login
+from . import views
+
 
 urlpatterns = [
     path('', login, name='login'),
-    path('abrir_chamado/', abrir_chamado, name='abrir_chamado'),
+    path('index/', views.index, name='index'),
+    path('abrir_chamado/', views.abrir_chamado, name='abrir_chamado'),
     
 ]
