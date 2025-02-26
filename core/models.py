@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.timezone import now
+from django.contrib.auth.hashers import make_password
 
 # Create your models here.
 class Chamado(models.Model):
@@ -31,11 +32,17 @@ class Chamado(models.Model):
 class Usuario(models.Model):
     id = models.AutoField(primary_key=True)
     nome_posto = models.CharField(default="unidade ou posto", max_length=100, null=False)
-    nome_usuario = models.CharField(max_length=100, null=False)
-    email_unidade = models.CharField(unique=True, null=False, max_length=100)
+    nome = models.CharField(max_length=100, null=False)
+    email = models.CharField(unique=True, null=False, max_length=100)
     telefone = models.CharField(max_length=15, null=False)
-    tipo = models.CharField(null=False, max_length=20, default="Cliente")
+    cargo = models.CharField(null=False, max_length=20, default="Atendente")
+    senha = models.CharField(max_length=255, null=False)
+
+    def save(self, *args, **kwargs):
+        self.senha = make_password(self.senha)
+        super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.descricao
+        return self.nome
+    
     

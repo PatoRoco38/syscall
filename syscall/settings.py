@@ -133,5 +133,6 @@ LOGIN_URL = 'login_view'
 # Configuração para autenticação
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
+    'django.contrib.auth.backends.AllowAllUsersModelBackend',
 ]
 
