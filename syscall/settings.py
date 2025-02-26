@@ -129,3 +129,9 @@ STATIC_URL = 'static/' # Usado durante o desenvolvimento
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = 'login_view'
+
+# Configuração para autenticação
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
+
