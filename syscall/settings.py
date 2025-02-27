@@ -136,3 +136,4 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.AllowAllUsersModelBackend',
 ]
 
+AUTH_USER_MODEL = 'core.Usuario'

@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils.timezone import now
-from django.contrib.auth.hashers import make_password
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
 # Create your models here.
 class Chamado(models.Model):
@@ -28,21 +28,37 @@ class Chamado(models.Model):
             self.data_fechamento = now()
         return super().save(*args, **kwargs)
 
+class UsuarioManager(BaseUserManager):
+    def create_user(self, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError("O endereço de e-mail deve ser fornecido")
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
 
-class Usuario(models.Model):
+    def create_superuser(self, email, password=None, **extra_fields):
+        extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_superuser", True)
+        return self.create_user(email, password, **extra_fields)   
+
+class Usuario(AbstractBaseUser, PermissionsMixin):
     id = models.AutoField(primary_key=True)
     nome_posto = models.CharField(default="unidade ou posto", max_length=100, null=False)
     nome = models.CharField(max_length=100, null=False)
     email = models.CharField(unique=True, null=False, max_length=100)
     telefone = models.CharField(max_length=15, null=False)
     cargo = models.CharField(null=False, max_length=20, default="Atendente")
-    senha = models.CharField(max_length=255, null=False)
+    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
 
-    def save(self, *args, **kwargs):
-        self.senha = make_password(self.senha)
-        super().save(*args, **kwargs)
+    objects = UsuarioManager()
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['nome', 'telefone']
 
     def __str__(self):
-        return self.nome
+        return self.email
     
-    
+ 
