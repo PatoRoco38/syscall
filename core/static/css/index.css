@@ -1,0 +1,31 @@
+/* Centraliza o título no topo */
+.index-container h1 {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.index-container h4 {
+    text-align: center;
+}
+
+/* Centraliza os botões na tela */
+.index-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Espaçamento entre os botões */
+    margin-top: 50px;
+}
+
+/* Ajusta os botões */
+.index-buttons button {
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+body {
+    background-image: url("/static/images/fundo1.webp"); /* Ajuste o caminho da imagem */
+    background-size: cover;  /* Ajusta a imagem para cobrir toda a tela */
+    background-position: center; /* Centraliza a imagem */
+    background-repeat: no-repeat; /* Evita repetição da imagem */
+    background-attachment: fixed; /* Mantém o fundo fixo ao rolar a página */
+}

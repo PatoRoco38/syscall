@@ -11,42 +11,20 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <!-- Estilos personalizados -->
-    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+    <link href="{% static 'css/index.css' %}" rel="stylesheet">
 </head>
 <body>
-    <div class="container-fluid text-center py-3">
-        <div class="row align-items-center">
-            <div class="col-2">
-                <img src="{% static 'images/PCGO.jpg' %}" alt="Logo Esquerda" class="img-fluid">
-            </div>
-            <div class="col-8">
-                <h1>Bem vindo ao Syscall</h1>
-                <h4>{{ user.nome }} - Posto {{ user.nome_posto }}</h4>
-            </div>
-            <div class="col-2">
-                <img src="{% static 'images/SIH-GO.jpg' %}" alt="Logo Direita" class="img-fluid">
-            </div>
-        </div>
+    <div class="index-container">
+        <h1>Bem vindo ao Syscall</h1>
+        <h4>{{ user.nome }} - Posto {{ user.nome_posto }}</h4>
     </div>
     
-    <div class="container text-center mt-4">
-        <div class="row justify-content-center">
-            <div class="col-md-2">
-                <a href="{% url 'abrir_chamado' %}" class="btn btn-primary w-100">Abrir Chamado</a>
-            </div>
-            <div class="col-md-2">
-                <a href="{% url 'relatorio' %}" class="btn btn-secondary w-100">Relatório</a>
-            </div>
-            <div class="col-md-2">
-                <a href="{% url 'troca_senha' %}" class="btn btn-warning w-100">Trocar Senha</a>
-            </div>
-            <div class="col-md-2" >
-                <a href="{% url 'cadastro' %}" class="btn btn-lg w-100">Cadastre-se</a>
-            </div>
-            <div class="col-md-2">
-                <a href="{% url 'logout' %}" class="btn btn-danger w-100">Logout</a>
-            </div>
-        </div>
+    <div class="index-buttons">
+        <a href="{% url 'abrir_chamado' %}" class="btn btn-primary">Abrir Chamado</a>
+        {# <a href="{% url 'relatorio' %}" class="btn btn-secondary">Relatório</a> #}
+        {# <a href="{% url 'trocar_senha' %}" class="btn btn-warning">Trocar Senha</a> #}
+        <a href="{% url 'cadastro' %}" class="btn btn-success">Cadastre-se</a>
+        <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
     </div>
 </body>
 </html>

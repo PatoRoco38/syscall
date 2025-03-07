@@ -11,7 +11,7 @@
 
 .form-control {
     border: 2px solid white !important; /* Borda branca */
-    color: white; /* Texto branco */
+    color: rgb(0, 0, 0); /* Texto branco */
     background-color: transparent; /* Fundo transparente */
 }
 
@@ -19,4 +19,12 @@
     border-color: white !important; /* Borda branca ao clicar */
     box-shadow: 0 0 5px rgba(255, 255, 255, 0.8); /* Efeito de brilho */
     outline: none;
+}
+
+body {
+    background-image: url("/static/images/fundo1.webp"); /* Ajuste o caminho da imagem */
+    background-size: cover;  /* Ajusta a imagem para cobrir toda a tela */
+    background-position: center; /* Centraliza a imagem */
+    background-repeat: no-repeat; /* Evita repetição da imagem */
+    background-attachment: fixed; /* Mantém o fundo fixo ao rolar a página */
 }
