@@ -17,9 +17,21 @@
 }
 
 /* Ajusta os botões */
-.index-buttons button {
+.index-buttons a {
     padding: 10px 20px;
     font-size: 16px;
+    font-weight: bold; /* Fontes em negrito */
+    color: black; /* Cor da fonte */
+    background-color: rgba(255, 255, 255, 0.8); /* Fundo levemente transparente */
+    border: 2px solid black; /* Borda preta para destacar */
+    cursor: pointer; /* Muda o cursor para indicar que é clicável */
+    transition: color 0.3s, background-color 0.3s; /* Transição suave */
+}
+
+/*Efeito ao passar o mouse */
+.index-buttons a:hover {
+    color: #444; /* Tom de cinza escuro para diferenciar do preto */
+    background-color: rgba(255, 255, 255, 1); /* Fundo sólido ao passar o mouse */
 }
 
 body {
