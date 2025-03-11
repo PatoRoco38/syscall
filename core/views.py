@@ -1,11 +1,47 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.hashers import make_password
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .models import Usuario
 from .forms import LoginForm
 
 # Create your views here.
+
+@login_required
+def trocar_senha(request):
+
+    sucesso = False # Inicializa a variável
+
+    if not request.user.cargo == 'Suporte':
+        messages.error(request, "Você não tem permissão para alterar senhas!")
+        return redirect("index")
+    
+    if request.method == "POST":
+        email = request.POST.get("email")
+        nova_senha = request.POST.get("senha")
+        confirmar_senha = request.POST.get("confirmar_senha")
+
+        if nova_senha != confirmar_senha:
+            messages.error(request, "As senhas digitadas são diferentes")
+            return redirect("trocar_senha")
+        
+        try:
+            usuario = Usuario.objects.get(email=email)
+            usuario.password = make_password(nova_senha)
+            usuario.save()
+            sucesso = True # Senha alterada
+
+            update_session_auth_hash(request, usuario) # Necessário para manter o usuário logado após a troca
+
+            return redirect("index")
+        except Usuario.DoesNotExist:
+            sucesso = False # Usuário não encontrado
+            messages.error(request, "Usuário não encontrado")
+
+    return render(request, "trocar_senha.html", {"sucesso": sucesso})
+
 def login_view(request):
     form = LoginForm()
 
@@ -60,9 +96,6 @@ def abrir_chamado(request):
 
 def relatorio(request):
     return render(request, 'relatorio.html')
-
-def troca_senha(request):
-    return render(request, 'troca_senha.html')
 
 def logout_view(request):
     logout(request)
