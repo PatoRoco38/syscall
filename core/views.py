@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password
 from django.contrib import messages
 from django.contrib.auth.models import User
-from .models import Usuario
+from .models import Usuario, Chamado
 from .forms import LoginForm
 
 # Create your views here.
@@ -92,6 +92,26 @@ def index(request):
     return render(request, 'index.html')
 
 def abrir_chamado(request):
+    if request.method == "POST":
+        posto = request.POST.get("posto")
+        telefone = request.POST.get("telefone")
+        ipv4 = request.POST.get("ipv4")
+        solicitante = request.POST.get("solicitante")
+        descricao = request.POST.get("descricao")
+
+        # Cria um novo chamado com os dados do formulário
+        chamado = Chamado(
+            posto = posto,
+            telefone = telefone,
+            ipv4 = ipv4,
+            solicitante = solicitante,
+            descricao = descricao
+        )
+        chamado.save()
+
+        messages.success(request, "Chamado aberto com sucesso!")
+        return redirect("abrir_chamado")
+
     return render(request, 'abrir_chamado.html')
 
 def relatorio(request):
