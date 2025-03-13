@@ -114,8 +114,12 @@ def abrir_chamado(request):
 
     return render(request, 'abrir_chamado.html')
 
-def relatorio(request):
-    return render(request, 'relatorio.html')
+def atendimento_chamados(request):
+    return render(request, 'atendimento_chamados.html')
+
+def detalhe_chamado(request, chamado_id):
+    chamado = Chamado.objects.get(id=chamado_id)
+    return render(request, 'detalhe_chamado.html', {'chamado': chamado})
 
 def logout_view(request):
     logout(request)
