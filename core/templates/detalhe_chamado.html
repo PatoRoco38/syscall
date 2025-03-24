@@ -29,14 +29,10 @@
     <form method="POST" action="{% url 'atualizar_chamado' chamado.id %}">
       {% csrf_token %}
       <div class="mb-3">
-        <label for="acao" class="form-label">Ação Realizada</label>
-        <textarea class="form-control" id="acao" name="acao" rows="3" placeholder="Digite a ação realizada">{{ chamado.acao }}</textarea>
-      </div>
-      <div class="mb-3">
         <label for="status" class="form-label">Status do Chamado</label>
         <select class="form-select" id="status" name="status">
           <option value="Aberto" {% if chamado.status == "Aberto" %}selected{% endif %}>Aberto</option>
-          <option value="Em atendimento" {% if chamado.status == "Em atendimento" %}selected{% endif %}>Em atendimento</option>
+          <option value="Em atendimento" {% if chamado.status == "Em atendimento" %}selected{% endif %}>Em Atendimento</option>
           <option value="Fechado" {% if chamado.status == "Fechado" %}selected{% endif %}>Fechado</option>
         </select>
       </div>
