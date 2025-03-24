@@ -12,5 +12,6 @@ urlpatterns = [
     path('trocar_senha/', views.trocar_senha, name='trocar_senha'),
     path('logout/', views.logout_view, name='logout'),
     path('cadastro/', views.cadastro, name='cadastro'),
+    path('detalhe_chamado/<int:chamado_id>/', views.detalhe_chamado, name='detalhe_chamado'),
 
 ]
