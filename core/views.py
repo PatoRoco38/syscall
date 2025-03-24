@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password
@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from .models import Usuario, Chamado
 from .forms import LoginForm
+from django.utils.timezone import now, timedelta
 
 # Create your views here.
 
@@ -122,6 +123,27 @@ def atendimento_chamados(request):
 def detalhe_chamado(request, chamado_id):
     chamado = Chamado.objects.get(id=chamado_id)
     return render(request, 'detalhe_chamado.html', {'chamado': chamado})
+
+def atualizar_chamado(request, chamado_id):
+    chamado = get_object_or_404(Chamado, id=chamado_id)
+
+    if chamado.data_fechamento is not None:
+        prazo_edicao = chamado.data_fechamento + timedelta(days=7)
+        if now() > prazo_edicao:
+            messages.error(request, "O prazo para edição do chamado expirou!")
+            return redirect("detalhe_chamado", chamado_id=chamado_id)
+        
+    if request.method == "POST":
+        novo_status = request.POST.get("status")
+        resposta = request.POST.get("resposta")
+        chamado.status = novo_status
+        chamado.resposta = resposta
+        chamado.save()
+
+        messages.success(request, "Chamado atualizado com sucesso!")
+        return redirect("detalhe_chamado", chamado_id=chamado_id)
+    
+    return render(request, 'atualizar_chamado.html', {'chamado': chamado})
 
 def logout_view(request):
     logout(request)

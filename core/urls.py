@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import index, abrir_chamado, login_view, atendimento_chamados, trocar_senha, logout_view, cadastro
+from .views import index, abrir_chamado, login_view, atendimento_chamados, trocar_senha, logout_view, cadastro, detalhe_chamado, atualizar_chamado
 from . import views
 
 
@@ -13,5 +13,6 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('cadastro/', views.cadastro, name='cadastro'),
     path('detalhe_chamado/<int:chamado_id>/', views.detalhe_chamado, name='detalhe_chamado'),
+    path('chamado/atualizar/<int:chamado_id>/', views.atualizar_chamado, name='atualizar_chamado'),
 
 ]
