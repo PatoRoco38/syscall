@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from .models import Usuario, Chamado
 from .forms import LoginForm
 from django.utils.timezone import now, timedelta
+from django.http import JsonResponse
 
 # Create your views here.
 
@@ -127,23 +128,18 @@ def detalhe_chamado(request, chamado_id):
 def atualizar_chamado(request, chamado_id):
     chamado = get_object_or_404(Chamado, id=chamado_id)
 
-    if chamado.data_fechamento is not None:
-        prazo_edicao = chamado.data_fechamento + timedelta(days=7)
-        if now() > prazo_edicao:
-            messages.error(request, "O prazo para edição do chamado expirou!")
-            return redirect("detalhe_chamado", chamado_id=chamado_id)
-        
+    # Para me manter na mesma página após a edição do chamado
+
     if request.method == "POST":
-        novo_status = request.POST.get("status")
-        resposta = request.POST.get("resposta")
-        chamado.status = novo_status
-        chamado.resposta = resposta
+        chamado.status = request.POST.get("status", chamado.status)
+        chamado.resposta = request.POST.get("resposta", chamado.resposta)
         chamado.save()
 
         messages.success(request, "Chamado atualizado com sucesso!")
-        return redirect("detalhe_chamado", chamado_id=chamado_id)
-    
-    return render(request, 'atualizar_chamado.html', {'chamado': chamado})
+
+        return render(request, "detalhe_chamado.html", {"chamado": chamado})
+
+    return render(request, "atualizar_chamado.html", {"chamado": chamado})
 
 def logout_view(request):
     logout(request)

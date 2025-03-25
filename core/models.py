@@ -9,6 +9,8 @@ class Chamado(models.Model):
         ("Em atendimento", "Em atendimento"),
         ("Fechado", "Fechado"),
     ]
+    def __str__(self):
+        return f"Chamado {self.id}"
 
     id = models.AutoField(primary_key=True)
     posto = models.CharField(default="Não informado", max_length=100)
