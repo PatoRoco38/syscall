@@ -10,6 +10,15 @@
 
 </head>
 <body>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {% if message.tags == 'success' %}alert-success{% else %}alert-danger{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
     <div class="container mt-5">
         <h2 class="mb-4">Cadastrar Usuário</h2>
         <form method="POST">
@@ -43,14 +52,6 @@
             <button type="button" class="btn btn-secondary" onclick="window.location.href='{% url 'index' %}'">Voltar</button>
         </form>
 
-        {% if success %}
-            <script>
-                setTimeout(function() {
-                    alert("Cadastro realizado com sucesso!")
-                    window.location.href = "{% url 'login' %}";
-                }, 500);
-            </script>
-        {% endif %}
     </div>
 </body>
 </html>

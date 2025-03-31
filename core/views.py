@@ -76,6 +76,10 @@ def cadastro(request):
         cargo = request.POST.get("cargo")
         senha = request.POST.get("senha")
 
+        if Usuario.objects.filter(email=email).exists():
+            messages.error(request, "Email já cadastrado!")
+            return redirect("cadastro")
+
         usuario = Usuario(
             nome_posto=nome_posto,
             nome=nome,
@@ -87,7 +91,9 @@ def cadastro(request):
         usuario.set_password(senha)
         usuario.save()
 
-        return render(request, "cadastro.html", {"success": True})
+        messages.success(request, "Usuário cadastrado com sucesso!")
+
+        return redirect("cadastro")
     return render(request, "cadastro.html")
 
 def index(request):
@@ -133,6 +139,9 @@ def atualizar_chamado(request, chamado_id):
     if request.method == "POST":
         chamado.status = request.POST.get("status", chamado.status)
         chamado.resposta = request.POST.get("resposta", chamado.resposta)
+
+        if chamado.status == 'Resolvido':
+            chamado.responsavel = request.user.nome
         chamado.save()
 
         messages.success(request, "Chamado atualizado com sucesso!")
