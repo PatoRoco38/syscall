@@ -18,7 +18,7 @@ class Chamado(models.Model):
     ipv4 = models.GenericIPAddressField(default="0.0.0.0", max_length=15)
     solicitante = models.CharField(default="Solicitante", null=False, max_length=100)
     status = models.CharField(choices=STATUS_CHOICES, default="Aberto", max_length=15)
-    acao = models.CharField(null=True, max_length=255)
+    responsavel = models.CharField(null=True, max_length=255)
     resposta = models.CharField(null=True, max_length=500)
     descricao = models.CharField(max_length=255)
     data_criacao = models.DateTimeField(auto_now_add=True)
@@ -51,7 +51,7 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     nome = models.CharField(max_length=100, null=False)
     email = models.CharField(unique=True, null=False, max_length=100)
     telefone = models.CharField(max_length=15, null=False)
-    cargo = models.CharField(null=False, max_length=20, default="Atendente")
+    cargo = models.CharField(null=False, max_length=20, default="Lider")
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
 
